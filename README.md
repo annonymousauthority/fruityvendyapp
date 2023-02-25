@@ -5,7 +5,7 @@ FruityVendy is a fruit punch calories tracker that uses Artificial intelligent i
 
 `The goal of this is the demonstrate the possible integration of golang, tensorflow models and vuejs to build a simple web app`
 
-Caveat
+### Caveat 👨🏾‍💻
 `This app doesn't have anything fancy 😅. Only fancy thing I integrated was tailwind, to help with the styling. The goal is to achieve efficient functionality`
 
 
