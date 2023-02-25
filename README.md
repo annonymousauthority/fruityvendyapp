@@ -1,5 +1,7 @@
 # FruityVendyApp
 
+https://user-images.githubusercontent.com/72549011/221384439-6276ce1c-bfda-4250-8338-fb9aa2f791a6.jpg
+
 ## Project Overview
 FruityVendy is a fruit punch calories tracker that uses Artificial intelligent image classifier to identify fruits shown by users to provide the total calories for the fruits used in the fruit punch. Not able to identify your fruits? No problem. You can select from a curated list of fruits to test the app.
 
