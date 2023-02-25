@@ -1,4 +1,17 @@
-# Nuxt 3 Minimal Starter
+# FruityVendyApp
+
+## Project Overview
+FruityVendy is a fruit punch calories tracker that uses Artificial intelligent image classifier to identify fruits shown by users to provide the total calories for the fruits used in the fruit punch. Not able to identify your fruits? No problem. You can select from a curated list of fruits to test the app.
+
+`The goal of this is the demonstrate the possible integration of golang, tensorflow models and vuejs to build a simple web app`
+
+Caveat
+`This app doesn't have anything fancy 😅. Only fancy thing I integrated was tailwind, to help with the styling. The goal is to achieve efficient functionality`
+
+
+
+
+
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
@@ -21,22 +34,3 @@ pnpm install
 
 Start the development server on http://localhost:3000
 
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
