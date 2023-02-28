@@ -25,10 +25,16 @@
                     v-slot="{ active, selected }">
                     <li
                       :class="['relative cursor-default select-none py-2 pl-3 pr-9', active ? 'bg-indigo-600 text-white' : 'text-gray-900']">
-                      <span :class="['block truncate', selected && 'font-semibold']"
+                      <div :class="['truncate flex justify-between space-x-6', selected && 'font-semibold']"
                         @click="onChangedSelection(person.name)">
-                        {{ person.name }}
-                      </span>
+                        <span>{{ person.name }}</span>
+                        <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </span>
+                      </div>
 
                       <span v-if="selected"
                         :class="['absolute inset-y-0 right-0 flex items-center pr-4', active ? 'text-white' : 'text-indigo-600']">
@@ -45,7 +51,7 @@
           </div>
           <div class="w-1/3"></div>
           <div class="text-white w-1/3 flex items-start flex-col space-y-3 text-left">
-            <h1>Fruit Added</h1>
+            <h1 class="text-2xl font-bold">Fruit Added</h1>
             <TransitionGroup name="list" tag="ul" enter-active-class="transition-all duration-200 ease-in"
               leave-active-class="transition-all duration-500 ease-in" leave-to-class="opacity-0 translate-x-[30px]"
               enter-from-class="opacity-0 translate-x-[30px]">
@@ -71,6 +77,9 @@
 
 
 <script setup>
+/*
+- Run a goscript that will call all the fruits from api and update a json file with the fruits.
+*/
 import { computed, ref, reactive } from 'vue'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
 import {
@@ -82,11 +91,14 @@ import {
   ComboboxOptions,
 } from '@headlessui/vue'
 
+import '~~/composables/Fetch'
+
 const people = [
   { id: 1, name: 'Mango' },
   { id: 2, name: 'Strawberry' },
   { id: 2, name: 'Orange' },
 ]
+
 
 
 const filteredPeople = computed(() =>
@@ -118,5 +130,6 @@ function showValue() {
 function remove(fruit) {
   state.fruits.splice(state.fruits.indexOf(fruit), 1)
 }
+
 
 </script>
