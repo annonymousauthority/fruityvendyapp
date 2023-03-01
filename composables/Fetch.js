@@ -1,7 +1,7 @@
 // fetch.js
 import { ref } from "vue";
 
-export function useFetch(url) {
+export function fetchFruity(url) {
   const data = ref(null);
   const error = ref(null);
 
