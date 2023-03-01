@@ -14,20 +14,20 @@
               <div class="relative mt-1">
                 <ComboboxInput
                   class="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-                  :display-value="(person) => state.selectedFruits === null ? 'Select Fruit' : person?.name" />
+                  :display-value="(fruits) => state.selectedFruits === null ? 'Select Fruit' : fruits?.name" />
                 <ComboboxButton class="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
                   <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
                 </ComboboxButton>
 
-                <ComboboxOptions v-if="filteredPeople.length > 0"
+                <ComboboxOptions v-if="filteredfruits.length > 0"
                   class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                  <ComboboxOption v-for="person in filteredPeople" :key="person.id" :value="person" as="template"
+                  <ComboboxOption v-for="fruits in filteredfruits" :key="fruits.id" :value="fruits" as="template"
                     v-slot="{ active, selected }">
                     <li
                       :class="['relative cursor-default select-none py-2 pl-3 pr-9', active ? 'bg-indigo-600 text-white' : 'text-gray-900']">
                       <div :class="['truncate flex justify-between space-x-6', selected && 'font-semibold']"
-                        @click="onChangedSelection(person.name)">
-                        <span>{{ person.name }}</span>
+                        @click="onChangedSelection(fruits.name)">
+                        <span>{{ fruits.name }}</span>
                         <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -92,20 +92,15 @@ import {
 } from '@headlessui/vue'
 
 import '~~/composables/Fetch'
+import fruitData from '~/contents/fruitsdatabase.json'
 
-const people = [
-  { id: 1, name: 'Mango' },
-  { id: 2, name: 'Strawberry' },
-  { id: 2, name: 'Orange' },
-]
+const fruits = JSON.parse(fruitData)
 
-
-
-const filteredPeople = computed(() =>
+const filteredfruits = computed(() =>
   state.query === ''
-    ? people
-    : people.filter((person) => {
-      return person.name.includes(state.query)
+    ? fruits
+    : fruits.filter((fruits) => {
+      return fruits.name.includes(state.query)
     })
 )
 
