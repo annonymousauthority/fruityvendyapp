@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gradient-to-br from-gray-900 to-gray-700 h-screen pt-64">
+  <div class="bg-gradient-to-br from-gray-900 to-gray-700 h-screen pt-12 lg:pt-64 p-6">
     <TransitionRoot as="template" :show="state.open">
       <Dialog as="div" class="relative z-10" @close="state.open = false">
         <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
@@ -46,13 +46,13 @@
     </TransitionRoot>
     <div
       class="w-full lg:max-w-5xl lg:h-[650px] mx-auto flex flex-col shadow-xl shadow-gray-900 rounded-lg border-2 border-gray-800">
-      <div class="flex justify-between items-center p-12">
+      <div class="block lg:flex justify-between items-center p-12">
         <h1 class="text-white text-2xl font-bold">FruityVendy</h1>
         <h2 class="text-white text-lg font-extralight italic">Made by Augustine</h2>
       </div>
       <div class="flex flex-col items-start p-12">
-        <div class="flex items-start w-full">
-          <div class="w-1/3">
+        <div class="block lg:flex items-start w-full space-y-6 lg:space-y-0">
+          <div class="w-full lg:w-1/3">
             <Combobox as="div" v-model="state.selectedFruits">
               <ComboboxLabel class="block text-sm font-medium text-white">Select Fruit</ComboboxLabel>
               <div class="relative mt-1">
@@ -90,8 +90,8 @@
               </div>
             </Combobox>
           </div>
-          <div class="w-1/3"></div>
-          <div class="text-white w-1/3 flex items-start flex-col text-left space-y-6">
+          <div class="w-full lg:w-1/3"></div>
+          <div class="text-white w-full lg:w-1/3 flex items-start flex-col text-left space-y-6">
             <div class="flex justify-between space-x-3 items-center">
               <h1 class="text-2xl font-bold">Fruit Added</h1>
               <span :class="[maxFruits ? 'text-red-500' : 'text-green-500']">{{ state.fruits.length }}/5</span>
