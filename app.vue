@@ -50,6 +50,16 @@
         <h1 class="text-white text-2xl font-bold">FruityVendy</h1>
         <h2 class="text-white text-lg font-extralight italic">Made by Augustine</h2>
       </div>
+      <div
+        class="bg-gray-700 p-2 w-4/5 lg:w-1/3 text-white rounded-lg shadow-lg shadow-gray-800 mt-4 my-4 mx-auto text-sm flex items-center justify-between space-x-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+        </svg>
+        <p>The calories unit is per 100gram of fruit.</p>
+        <span></span>
+      </div>
       <div class="flex flex-col items-start p-12">
         <div class="block lg:flex items-start w-full space-y-6 lg:space-y-0">
           <div class="w-full lg:w-1/3">
