@@ -1,14 +1,15 @@
 // fetch.js
 import { ref } from "vue";
 
-export function fetchFruity(url) {
+export async function fetchFruity(url) {
   const data = ref(null);
   const error = ref(null);
 
-  fetch(url)
-    .then((res) => res.json())
-    .then((json) => (data.value = json))
-    .catch((err) => (error.value = err));
-
-  return { data, error };
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
 }

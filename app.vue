@@ -53,14 +53,14 @@
       <div
         class="bg-gray-700 p-2 w-4/5 lg:w-1/3 text-white rounded-lg shadow-lg shadow-gray-800 mt-4 my-4 mx-auto text-sm flex items-center justify-between space-x-2">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="w-6 h-6">
+          class="w-12 h-12">
           <path stroke-linecap="round" stroke-linejoin="round"
             d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
         </svg>
-        <p>The calories unit is per 100gram of fruit.</p>
+        <p>The calories unit is per 100gram of fruit, and also represent an approximate value for a unit of a fruit</p>
         <span></span>
       </div>
-      <div class="flex flex-col items-start p-12">
+      <div class="flex flex-col items-start p-12 pt-4">
         <div class="block lg:flex items-start w-full space-y-6 lg:space-y-0">
           <div class="w-full lg:w-1/3">
             <Combobox as="div" v-model="state.selectedFruits">
@@ -109,12 +109,20 @@
             <TransitionGroup name="list" tag="ul" enter-active-class="transition-all duration-200 ease-in"
               leave-active-class="transition-all duration-500 ease-in" leave-to-class="opacity-0 translate-x-[30px]"
               enter-from-class="opacity-0 translate-x-[30px]">
-              <li v-for="fruit in state.fruits" :key="fruit" class="font-extralight flex space-x-24 justify-between mt-3">
+              <li v-for="fruit in state.fruits" :key="fruit" class="font-extralight flex space-x-6 justify-between mt-3">
                 <span>{{ fruit }}</span>
                 <button @click="remove(fruit)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-600">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
                   </svg>
+                </button>
+                <button @click="increaseCalories()">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6 text-green-500">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+
                 </button>
               </li>
             </TransitionGroup>
@@ -152,11 +160,12 @@ import {
 } from '@headlessui/vue'
 
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import fruitData from '~/contents/fruitsdatabase.json'
+import { fetchFruity } from './composables/Fetch'
 
 
+const data = await fetchFruity("http://localhost:3000/getFruits") //change this to main servers when pushed to prod systems
+const fruits = JSON.parse(JSON.stringify(data))
 
-const fruits = JSON.parse(JSON.stringify(fruitData))
 const state = reactive({
   fruits: [],
   query: '',
