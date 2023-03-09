@@ -60,84 +60,110 @@
         <p>The calories unit is per 100gram of fruit, and also represent an approximate value for a unit of a fruit</p>
         <span></span>
       </div>
-      <div class="flex flex-col items-start p-12 pt-4">
-        <div class="block lg:flex items-start w-full space-y-6 lg:space-y-0">
-          <div class="w-full lg:w-1/3">
-            <Combobox as="div" v-model="state.selectedFruits">
-              <ComboboxLabel class="block text-sm font-medium text-white">Select Fruit</ComboboxLabel>
-              <div class="relative mt-1">
-                <ComboboxInput
-                  class="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-                  :display-value="(fruits) => state.selectedFruits === null ? 'Select Fruit' : fruits?.name" />
-                <ComboboxButton class="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
-                  <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-                </ComboboxButton>
-                <ComboboxOptions v-if="filteredfruits.length > 0"
-                  class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                  <ComboboxOption v-for="(fruits, index) in filteredfruits" :key="index" :value="fruits" as="template"
-                    v-slot="{ active, selected }">
-                    <li
-                      :class="['relative cursor-default select-none py-2 pl-3 pr-9', active ? 'bg-indigo-600 text-white' : 'text-gray-900']">
-                      <div :class="['truncate flex justify-between space-x-6', selected && 'font-semibold']"
-                        @click="onChangedSelection(fruits.name, index)">
-                        <span @click="onChangedSelection(fruits.name, index)">{{ fruits.name }}</span>
-                        <span>
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
+      <div
+        class="w-full lg:w-1/3 mx-auto flex items-center justify-center bg-gray-800 shadow-lg shadow-gray-900 rounded-lg">
+        <button @click="state.chat = true; state.dropdown = false"
+          :class="[state.chat ? 'text-white rounded-l-lg bg-green-800 p-3 w-1/2 mx-0' : 'bg-transparent text-white w-1/2 p-3']">
+          Chat with Vendy</button>
+        <button @click="state.chat = false; state.dropdown = true"
+          :class="[state.dropdown ? 'text-white rounded-r-lg bg-green-800 w-1/2 p-3' : 'bg-transparent text-white w-1/2 p-3']">Use
+          Dropdown</button>
+      </div>
+      <div v-if="state.response != ''" class="my-3 w-full p-3 lg:p-0 lg:w-1/3 mx-auto flex text-white">
+        <p> {{ state.response }}</p>
+      </div>
+      <div v-else></div>
+      <Transition>
+        <div v-if="state.dropdown" class="flex flex-col items-start p-12 pt-4">
+          <div class="block lg:flex items-start w-full space-y-6 lg:space-y-0">
+            <div class="w-full lg:w-1/3">
+              <Combobox as="div" v-model="state.selectedFruits">
+                <ComboboxLabel class="block text-sm font-medium text-white">Select Fruit</ComboboxLabel>
+                <div class="relative mt-1">
+                  <ComboboxInput
+                    class="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                    :display-value="(fruits) => state.selectedFruits === null ? 'Select Fruit' : fruits?.name" />
+                  <ComboboxButton
+                    class="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+                    <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                  </ComboboxButton>
+                  <ComboboxOptions v-if="filteredfruits.length > 0"
+                    class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                    <ComboboxOption v-for="(fruits, index) in filteredfruits" :key="index" :value="fruits" as="template"
+                      v-slot="{ active, selected }">
+                      <li
+                        :class="['relative cursor-default select-none py-2 pl-3 pr-9', active ? 'bg-indigo-600 text-white' : 'text-gray-900']">
+                        <div :class="['truncate flex justify-between space-x-6', selected && 'font-semibold']"
+                          @click="onChangedSelection(fruits.name, index)">
+                          <span @click="onChangedSelection(fruits.name, index)">{{ fruits.name }}</span>
+                          <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                              stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                          </span>
+                        </div>
+
+                        <span v-if="selected"
+                          :class="['absolute inset-y-0 right-0 flex items-center pr-4', active ? 'text-white' : 'text-indigo-600']">
+                          <CheckIcon class="h-5 w-5" aria-hidden="true" />
                         </span>
-                      </div>
-
-                      <span v-if="selected"
-                        :class="['absolute inset-y-0 right-0 flex items-center pr-4', active ? 'text-white' : 'text-indigo-600']">
-                        <CheckIcon class="h-5 w-5" aria-hidden="true" />
-                      </span>
-                    </li>
-                  </ComboboxOption>
-                </ComboboxOptions>
-              </div>
-            </Combobox>
-          </div>
-          <div class="w-full lg:w-1/3"></div>
-          <div class="text-white w-full lg:w-1/3 flex items-start flex-col text-left space-y-6">
-            <div class="flex justify-between space-x-3 items-center">
-              <h1 class="text-2xl font-bold">Fruit Added</h1>
-              <span :class="[maxFruits ? 'text-red-500' : 'text-green-500']">{{ state.fruits.length }}/5</span>
+                      </li>
+                    </ComboboxOption>
+                  </ComboboxOptions>
+                </div>
+              </Combobox>
             </div>
-            <TransitionGroup name="list" tag="ul" enter-active-class="transition-all duration-200 ease-in"
-              leave-active-class="transition-all duration-500 ease-in" leave-to-class="opacity-0 translate-x-[30px]"
-              enter-from-class="opacity-0 translate-x-[30px]">
-              <li v-for="fruit in state.fruits" :key="fruit" class="font-extralight flex space-x-6 justify-between mt-3">
-                <span>{{ fruit }}</span>
-                <button @click="remove(fruit)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-600">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
-                  </svg>
-                </button>
-                <button @click="increaseCalories()">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-6 h-6 text-green-500">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+            <div class="w-full lg:w-1/3"></div>
+            <div class="text-white w-full lg:w-1/3 flex items-start flex-col text-left space-y-6">
+              <div class="flex justify-between space-x-3 items-center">
+                <h1 class="text-2xl font-bold">Fruit Added</h1>
+                <span :class="[maxFruits ? 'text-red-500' : 'text-green-500']">{{ state.fruits.length }}/5</span>
+              </div>
+              <TransitionGroup name="list" tag="ul" enter-active-class="transition-all duration-200 ease-in"
+                leave-active-class="transition-all duration-500 ease-in" leave-to-class="opacity-0 translate-x-[30px]"
+                enter-from-class="opacity-0 translate-x-[30px]">
+                <li v-for="fruit in state.fruits" :key="fruit"
+                  class="font-extralight flex space-x-6 justify-between mt-3">
+                  <span>{{ fruit }}</span>
+                  <button @click="remove(fruit)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                      stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-600">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+                    </svg>
+                  </button>
+                  <button @click="increaseCalories()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor" class="w-6 h-6 text-green-500">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
 
-                </button>
-              </li>
-            </TransitionGroup>
-            <span class="text-sm font-extralight text-red-500" v-if="state.error">You don't atleast 3 fruits in your
-              mix.</span>
-            <span v-else></span>
-            <button @click="showValue"
-              class="mt-12 bg-gradient-to-b from-green-500 to-green-800 p-3 rounded-lg text-white shadow-lg shadow-gray-800">Calculate
-              Calories</button>
+                  </button>
+                </li>
+              </TransitionGroup>
+              <span class="text-sm font-extralight text-red-500" v-if="state.error">You don't atleast 3 fruits in your
+                mix.</span>
+              <span v-else></span>
+              <button @click="showValue"
+                class="mt-12 bg-gradient-to-b from-green-500 to-green-800 p-3 rounded-lg text-white shadow-lg shadow-gray-800">Calculate
+                Calories</button>
+            </div>
           </div>
         </div>
-
-
-
-      </div>
+        <div v-else-if="state.chat" class="p-0 m-0">
+          <div class="w-full lg:w-1/3 mx-auto flex items-center justify-center mt-3">
+            <div>
+              <label for="prompt" class="text-white text-sm">Enter Fruit Punch Prompt here.</label>
+              <textarea id="prompt" v-model="state.prompt" :onchanged="onChangedReset" cols="7"
+                class="w-full p-3 bg-white rounded-lg focus:ring-green-500 focus:outline-green-500 text-sm"> </textarea>
+            </div>
+          </div>
+          <button @click="evaluatePrompt"
+            class="mt-3 flex mx-auto bg-gradient-to-b from-green-500 to-green-800 p-3 rounded-lg text-white shadow-lg shadow-gray-800">Calculate
+            Calories</button>
+        </div>
+      </Transition>
 
     </div>
   </div>
@@ -158,9 +184,9 @@ import {
   ComboboxOption,
   ComboboxOptions,
 } from '@headlessui/vue'
-
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { fetchFruity } from './composables/Fetch'
+
 
 
 const data = await fetchFruity("http://localhost:3000/getFruits") //change this to main servers when pushed to prod systems
@@ -174,6 +200,13 @@ const state = reactive({
   calories: 0,
   open: false,
   error: false,
+  chat: false,
+  dropdown: true,
+  prompt: '',
+  response: '',
+  counter: 0,
+  resLength: 0,
+  res: ''
 })
 
 const filteredfruits = computed(() =>
@@ -190,13 +223,38 @@ const maxFruits = computed(() =>
     : false
 )
 
-
+function onChangedReset() {
+  state.res = ''
+  state.counter = 0
+  state.response = ''
+}
 
 function updateFruits(value, id) {
   state.error = false
   if (!state.fruits.includes(value) && state.fruits.length < 5) {
     state.fruits.push(value)
     state.calories += fruits[id].nutritions.calories
+  }
+}
+
+function evaluatePrompt() {
+  const appName = 'Vendy'
+
+  if (!state.prompt.includes(appName.toLowerCase)) {
+    state.res = "My creators taught me it's polite to address someone by their name. My name is Vendy nice to meet you."
+    setTimeout(() => {
+      state.prompt = ''
+      state.resLength = state.res.length
+      typeResponse()
+    }, 1200);
+  }
+}
+
+function typeResponse() {
+  if (state.counter < state.resLength) {
+    state.response += state.res.charAt(state.counter)
+    state.counter += 1
+    setTimeout(typeResponse, 100);
   }
 }
 
